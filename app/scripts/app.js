@@ -11,6 +11,15 @@
 
 
 
+function parseQueryString() {
+  var query = (window.location.search || '?').substr(1);
+  var map = {};
+  query.replace(/([^&=]+)=?([^&]*)(?:&+|$)/g, function (match, key, value) {
+    (map[key] = map[key] || []).push(window.decodeURIComponent(value));
+  });
+  return map;
+}
+
 
 angular
   .module('AngularSharePointApp', [
@@ -69,21 +78,18 @@ angular
     };
 
 
+  }])
+
+
+
+  .factory('SectionList', ['SharePoint', function (SharePoint) {
+    return new SharePoint.API.List('Sections Rapports ParaChem');
   }]);
 
 
 
 
 
-
-function parseQueryString() {
-  var query = (window.location.search || '?').substr(1);
-  var map = {};
-  query.replace(/([^&=]+)=?([^&]*)(?:&+|$)/g, function (match, key, value) {
-    (map[key] = map[key] || []).push(window.decodeURIComponent(value));
-  });
-  return map;
-}
 
 
 
