@@ -8,10 +8,20 @@
  * Controller of the AngularSharePointApp
  */
 
-angular.module('AngularSharePointApp').controller('MainCtrl', ['SectionList', function (SectionList) {
+angular.module('AngularSharePointApp').controller('MainCtrl', ['ReportList', '$location', '$rootScope', function (ReportList, $location, $rootScope) {
 
-	SectionList.find('$filter=(ReportType eq \'UO\')').then(function (sections) {
-		console.log(sections);
+	if (typeof $rootScope.me === 'undefined') {
+		return $location.path('/gateway');
+	}
+
+
+
+	ReportList.find('$filter=(IsActive eq 1) and (ReportType eq \'uo\')&$select=Id').then(function (reports) {
+		if (reports.length < 1) {
+			$location.path('/report/new');
+		} else {
+			$location.path('/report/manage/' + reports[0].Id);
+		}
 	});
 
 }]);

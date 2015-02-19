@@ -34,7 +34,7 @@ angular
 
       // Home
       .when('/home', {
-        templateUrl: 'views/main.html',
+        template: '',
         controller: 'MainCtrl'
       })
 
@@ -42,6 +42,25 @@ angular
       .when('/gateway', {
         template: '',
         controller: 'GatewayCtrl',
+      })
+
+      .when('/report/new', {
+        templateUrl: 'views/report/new.html',
+        controller: 'ReportNewCtrl',
+      })
+
+      .when('/report/manage/:id', {
+        templateUrl: 'views/report/manage.html',
+        controller: 'ReportManageCtrl',
+      })
+
+      .when('/report/close-last/:id', {
+        templateUrl: 'views/report/close-last.html',
+        controller: 'ReportCloseLastCtrl',
+      })
+
+      .when('/reload', {
+        templateUrl: 'views/reload.html',
       })
 
       // Default
@@ -81,9 +100,13 @@ angular
   }])
 
 
+  .factory('ReportList', ['SharePoint', function (SharePoint) {
+    return new SharePoint.API.List('Rapports de quart');
+  }])
+
 
   .factory('SectionList', ['SharePoint', function (SharePoint) {
-    return new SharePoint.API.List('Sections Rapports ParaChem');
+    return new SharePoint.API.List('Sections Rapports Parachem');
   }]);
 
 
