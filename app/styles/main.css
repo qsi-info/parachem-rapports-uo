@@ -30,6 +30,7 @@
 }
 
 .custom-sticky-class {
+  left: inherit !important;
   right: 75px;
   width: 270px !important;
 }

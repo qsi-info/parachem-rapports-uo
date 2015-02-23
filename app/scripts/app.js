@@ -26,6 +26,7 @@ angular
     'ngCookies',
     'ngResource',
     'ngRoute',
+    'sticky',
     'cfp.loadingBar',
   ])
 
@@ -57,6 +58,10 @@ angular
       .when('/report/close-last/:id', {
         templateUrl: 'views/report/close-last.html',
         controller: 'ReportCloseLastCtrl',
+      })
+
+      .when('/report/end', {
+        templateUrl: 'views/report/end.html'
       })
 
       .when('/reload', {
@@ -97,6 +102,11 @@ angular
     };
 
 
+  }])
+
+
+  .factory('CommentList', ['SharePoint', function (SharePoint) {
+    return new SharePoint.API.List('Commentaires de rapport');
   }])
 
 

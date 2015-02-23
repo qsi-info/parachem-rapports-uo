@@ -8,12 +8,21 @@
  * Controller of the AngularSharePointApp
  */
 
+
+ /*jshint latedef: false */
+/* jshint loopfunc:true */
+/* jslint browser: true, plusplus: true */
+
 angular.module('AngularSharePointApp').controller('ReportNewCtrl', ['$scope', '$rootScope', '$location', 'ReportList', function ($scope, $rootScope, $location, ReportList) {
 
 
 	if (typeof $rootScope.me === 'undefined') {
 		return $location.path('/gateway');
 	}
+
+
+	
+
 
 
 	$scope.report = {
@@ -23,6 +32,7 @@ angular.module('AngularSharePointApp').controller('ReportNewCtrl', ['$scope', '$
 	};
 
 	$scope.inCreation = true;	
+	$scope.accessLastReport = false;	
 
 
 	$scope.setReportGroup = function (team) {
@@ -50,6 +60,22 @@ angular.module('AngularSharePointApp').controller('ReportNewCtrl', ['$scope', '$
 			$location.path('/report/manage/' + reportCreated.Id);
 		});
 	};	
+
+
+
+
+	function get_user_last_report () {
+		ReportList.find('$filter=(IsActive eq 0) and (ReportType eq \'uo\') and (Author/Id eq ' + $rootScope.me.get_id() + ') &$orderby=Modified desc&$top=1&select=Id').then(function (reports) {
+			if (reports.length > 0) {
+				$scope.accessLastReport = true;
+				$scope.lastReportUrl = '#/report/manage/' + reports[0].Id + '?review=yes';				
+			}
+		});
+	}
+
+
+	get_user_last_report();
+
 
 
 }]);
