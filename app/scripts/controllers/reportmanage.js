@@ -226,7 +226,6 @@ angular.module('AngularSharePointApp').controller('ReportManageCtrl', ['ReportLi
 					console.log('report using last report comments');
 					// Load the comments from the last report
 					load_previous_comments().then(function (comments) {
-						console.log('Previous comments', comments);
 						// Bound the new comments
 						$scope.comments = $scope.comments.concat(comments);
 						// Set report to initialize
