@@ -46,22 +46,22 @@ angular
       })
 
       .when('/report/new', {
-        templateUrl: 'views/report/new.html',
+        templateUrl: 'views/uo/new.html',
         controller: 'ReportNewCtrl',
       })
 
       .when('/report/manage/:id', {
-        templateUrl: 'views/report/manage.html',
+        templateUrl: 'views/uo/manage.html',
         controller: 'ReportManageCtrl',
       })
 
       .when('/report/close-last/:id', {
-        templateUrl: 'views/report/close-last.html',
+        templateUrl: 'views/uo/close-last.html',
         controller: 'ReportCloseLastCtrl',
       })
 
       .when('/report/end', {
-        templateUrl: 'views/report/end.html'
+        templateUrl: 'views/uo/end.html'
       })
 
       .when('/reload', {
