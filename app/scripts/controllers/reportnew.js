@@ -54,11 +54,15 @@ angular.module('AngularSharePointApp').controller('ReportNewCtrl', ['$scope', '$
 			return window.alert('Vous devez selectionner une équipe');
 		}
 
-		$scope.inCreation = false;
+		if (window.confirm('Etes-vous certain de vouloir créer un rapport de ' + $scope.report.Period.toUpperCase() + ' avec l\'équipe ' + $scope.report.Team + '')) {
+			$scope.inCreation = false;
 
-		ReportList.add($scope.report).then(function (reportCreated) {
-			$location.path('/report/manage/' + reportCreated.Id);
-		});
+			ReportList.add($scope.report).then(function (reportCreated) {
+				$location.path('/report/manage/' + reportCreated.Id);
+			});			
+		}
+
+
 	};	
 
 
