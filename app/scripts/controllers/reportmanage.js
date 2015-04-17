@@ -14,7 +14,9 @@
 /* jslint browser: true, plusplus: true */
 
 
-angular.module('AngularSharePointApp').controller('ReportManageCtrl', ['ReportList', '$location', '$routeParams', '$scope', '$rootScope', 'CommentList', '$q', 'SectionList', 'cfpLoadingBar', function (ReportList, $location, $routeParams, $scope, $rootScope, CommentList, $q, SectionList, cfpLoadingBar) {
+angular.module('AngularSharePointApp').controller('ReportManageCtrl', 
+	['ReportList', '$location', '$routeParams', '$scope', '$rootScope', 'CommentList', '$q', 'SectionList', 'cfpLoadingBar', 'Utils', 
+	function (ReportList, $location, $routeParams, $scope, $rootScope, CommentList, $q, SectionList, cfpLoadingBar, Utils) {
 
 	if (typeof $rootScope.me === 'undefined') {
 		return $location.path('/gateway');
@@ -122,6 +124,15 @@ angular.module('AngularSharePointApp').controller('ReportManageCtrl', ['ReportLi
 				$location.path('/report/end');
 			});
 		}
+	};
+
+
+	$scope.showRender = function () {
+		Utils.popupWindow('http://intranet/SitePages/2.0/PI/Trend2.aspx', 1000, 600);
+	};
+
+	$scope.showRender2 = function () {
+		Utils.popupWindow('http://intranet/SitePages/2.0/PI/Trend3.aspx', 1000, 600);
 	};
 
 

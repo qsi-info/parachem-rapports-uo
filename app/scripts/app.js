@@ -117,7 +117,42 @@ angular
 
   .factory('SectionList', ['SharePoint', function (SharePoint) {
     return new SharePoint.API.List('Sections Rapports Parachem');
-  }]);
+  }])
+
+
+
+
+
+
+
+  
+  .factory('Utils', [function () {
+
+    var service = {};
+
+    service.popupWindow = function (url, width, height) {
+      var screenX = typeof window.screenX !== 'undefined' ? window.screenX : window.screenLeft;
+      var screenY = typeof window.screenY !== 'undefined' ? window.screenY : window.screenTop;
+      var outerWidth = typeof window.outerWidth !== 'undefined' ? window.outerWidth : document.body.clientWidth;
+      var outerHeight = typeof window.outerHeight !== 'undefined' ? window.outerHeight : (document.body.clientHeight-22);
+      var left = window.parseInt(screenX + ((outerWidth - width) / 2), 10);
+      var top = window.parseInt(screenY + ((outerHeight - height) / 2.5), 10);
+      var features = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top;
+      features = features.concat(',scrollbars=no,toolbar=no,menubar=no,status=no,location=no,directories=no');
+
+      var newWindow = window.open(url, '', features);
+
+      if (window.focus) {
+        newWindow.focus();
+      }
+
+      return newWindow;
+    };
+
+    return service;
+
+
+  }]); 
 
 
 
