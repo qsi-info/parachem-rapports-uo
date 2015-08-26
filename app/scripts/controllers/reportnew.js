@@ -28,7 +28,7 @@ angular.module('AngularSharePointApp').controller('ReportNewCtrl', ['$scope', '$
 	$scope.report = {
 		Title: '',
 		ReportType: 'uo',
-		useLastReport: true,
+		useLastReport: false,
 	};
 
 	$scope.inCreation = true;	
