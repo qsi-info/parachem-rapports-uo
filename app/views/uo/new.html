@@ -104,7 +104,7 @@
 
 
 
-<div class="row">
+<!-- <div class="row">
 	<div class="col-md-12">
 		<fieldset>
 			<legend>Configuration</legend>
@@ -114,6 +114,47 @@
 		</fieldset>
 		<br/>
 	</div>
+</div> -->
+
+
+<div class="row">
+    <div class="col-md-12">
+        <legend>Configuration</legend>
+        <div class="form-group">
+            <label>
+                <input
+                    type="radio"
+                    name="config"
+                    value="blank"
+                    ng-model="report.CommentsConfiguration"/>
+                <span>Commencer avec un rapport vierge</span>
+            </label><br/>
+            <label>
+                <input
+                    type="radio"
+                    name="config"
+                    value="mine"
+                    ng-model="report.CommentsConfiguration"/>
+                <span>Commencer seulement les commentaires de <em>mon</em> dernier rapport</span>
+            </label><br/>
+            <label>
+                <input
+                    type="radio"
+                    name="config"
+                    value="last"
+                    ng-model="report.CommentsConfiguration"/>
+                <span>Commencer seulement avec les commentaires <em>du</em> dernier rapport (peu importe le maître)</span>
+            </label><br/>
+            <label>
+                <input
+                    type="radio"
+                    name="config"
+                    value="both"
+                    ng-model="report.CommentsConfiguration"/>
+                <span>Commencer la combinaison des deux.</span>
+            </label>
+        </div>
+    </div>
 </div>
 
 

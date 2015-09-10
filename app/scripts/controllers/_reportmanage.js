@@ -12,7 +12,6 @@
 /* global $:false */
 /* jshint loopfunc:true */
 /* jslint browser: true, plusplus: true */
-/* jshint asi:true */
 
 
 angular.module('AngularSharePointApp').controller('ReportManageCtrl', 
@@ -105,9 +104,9 @@ angular.module('AngularSharePointApp').controller('ReportManageCtrl',
 
 
 	$scope.saveNote = function () {
-		// if ($scope.report.Note === '' || $scope.report.Note === null && typeof $scope.report.Note === 'object') {
-		// 	return window.alert('Le message doit contenir de l\'information.');
-		// }
+		if ($scope.report.Note === '' || $scope.report.Note === null && typeof $scope.report.Note === 'object') {
+			return window.alert('Le message doit contenir de l\'information.');
+		}
 		cfpLoadingBar.start();			
 		ReportList.update($scope.report.Id, { Note: $scope.report.Note }).then(function () {
 			$('#myNote').modal('hide');
@@ -159,7 +158,7 @@ angular.module('AngularSharePointApp').controller('ReportManageCtrl',
 
 
 	function get_current_report () {
-		return ReportList.findOne($routeParams.id, '$select=Id,HasReadNote,CommentsConfiguration,Created,IsInitialize,Team,Period,Note,Author/Id,Author/Title&$expand=Author');
+		return ReportList.findOne($routeParams.id, '$select=Id,HasReadNote,useLastReport,Created,IsInitialize,Team,Period,Note,Author/Id,Author/Title&$expand=Author');
 	}
 
 
@@ -198,34 +197,6 @@ angular.module('AngularSharePointApp').controller('ReportManageCtrl',
 	}
 
 
-	function load_my_previous_comments () {
-		// console.log($rootScope.me);
-		var deferred = $q.defer();
-
-		var filter = '$filter=(Author/Id eq ' + $rootScope.me.get_id() + ' and Id ne ' + $scope.report.Id + ')';
-		var select = '$select=Id,Author/Id';
-		var orderBy = '$orderby=Modified desc';
-		var top = '$top=1';
-		var expand = '$expand=Author';
-
-		var odata = [filter,select,orderBy,top,expand].join('&');
-
-		ReportList.find(odata).then(function (founds) {
-			if (founds.length < 1) {
-				deferred.resolve([]);
-			} else {
-				CommentList.find('$filter=(Report eq \'' + founds[0].Id + '\')').then(function (comments) {
-					var promises = [];
-					comments.forEach(function (comment) {
-						promises.push(CommentList.add({ Title: comment.Title, SectionId: comment.SectionId, ReportId: $scope.report.Id }));
-					});
-					$q.all(promises).then(deferred.resolve);
-				})
-			}
-		})
-		return deferred.promise;	
-	}
-
 
 	function init_report_manager () {
 		var deferred = $q.defer();
@@ -254,15 +225,15 @@ angular.module('AngularSharePointApp').controller('ReportManageCtrl',
 						deferred.resolve(true);
 					});
 				// Last report is null because first report ever or doesnt want to use last report comments
-				} else if ($scope.lastReport === null || $scope.report.CommentsConfiguration === 'blank') {
+				} else if ($scope.lastReport === null || !$scope.report.useLastReport) {
 					console.log('first report ever or not using last report comments');
 					// Set report to initialize
 					set_report_initialize().then(function () {
 						// Show interface
 						deferred.resolve(true);					
 					});
-				// Report is not initialize but wants to use his own comments
-				} else if ($scope.report.CommentsConfiguration === 'last') {
+				// Report is not initialize but wants to use last report comments
+				} else if ($scope.report.useLastReport) {
 					console.log('report using last report comments');
 					// Load the comments from the last report
 					load_previous_comments().then(function (comments) {
@@ -274,32 +245,6 @@ angular.module('AngularSharePointApp').controller('ReportManageCtrl',
 							deferred.resolve(true);
 						});
 					});
-
-				} else if ($scope.report.CommentsConfiguration === 'mine') {
-					console.log('Use my last report comments');
-					load_my_previous_comments()
-					.then(function (comments) {
-						$scope.comments = $scope.comments.concat(comments);
-						set_report_initialize().then(function () {
-							// Show interface
-							deferred.resolve(true);
-						});
-					})
-
-				} else if ($scope.report.CommentsConfiguration === 'both') {
-					console.log('Use both');
-					load_my_previous_comments()
-					.then(function (pCommnets) {
-						$scope.comments = $scope.comments.concat(pCommnets);
-						load_previous_comments()
-						.then(function (comments) {
-							$scope.comments = $scope.comments.concat(comments);
-							set_report_initialize().then(function () {
-								// Show interface
-								deferred.resolve(true);
-							});
-						})
-					})
 				} else {
 					deferred.reject(false);
 				}

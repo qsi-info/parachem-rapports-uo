@@ -54,6 +54,10 @@ angular.module('AngularSharePointApp').controller('ReportNewCtrl', ['$scope', '$
 			return window.alert('Vous devez selectionner une équipe');
 		}
 
+		if (typeof $scope.report.CommentsConfiguration === 'undefined') {
+			return window.alert('Vous devez selectionner une configuration de rapport');
+		}
+
 		if (window.confirm('Etes-vous certain de vouloir créer un rapport de ' + $scope.report.Period.toUpperCase() + ' avec l\'équipe ' + $scope.report.Team + '')) {
 			$scope.inCreation = false;
 
