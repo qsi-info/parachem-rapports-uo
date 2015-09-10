@@ -175,7 +175,7 @@ angular.module('AngularSharePointApp').controller('ReportManageCtrl',
 
 	function get_last_report () {
 		var deferred = $q.defer();
-		ReportList.find('$filter=(IsActive eq 0) and (ReportType eq \'uo\')&$orderby=Modified desc&$top=1&$select=Note,Id,IsActive').then(function (reports) {
+		ReportList.find('$filter=(IsActive eq 0) and (ReportType eq \'uo\')&$orderby=Created desc&$top=1&$select=Note,Id,IsActive').then(function (reports) {
 			if (reports.length > 0) {
 				deferred.resolve(reports[0]);
 			} else {
