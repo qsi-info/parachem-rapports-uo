@@ -61,11 +61,11 @@
 
 		<table ng-show="report" class="table table-hover table-striped">
 			<caption>Rapport unités d'opérations</caption>
-			<tr>
+<!-- 			<tr>
 				<td>Identifiant</td>
 				<td ng-bind="report.Id"></td>
 			</tr>
-			<tr>
+ -->			<tr>
 				<td>Responsable</td>
 				<td ng-bind="report.Author.Title"></td>
 			</tr>
@@ -142,7 +142,7 @@
 	      		<textarea class="form-control" ng-model="report.Note" rows="10" placeholder="Vous pouvez laisser une note pour le prochain quart."></textarea>
 	      </div>
 	      <div class="modal-footer">
-      		<button class="btn btn-default" data-dismiss="modal">Annuler</button>
+      		<button class="btn btn-default" data-dismiss="modal">Fermer</button>
       		<button type="submit" class="btn btn-primary">Sauvegarder</button>
 	      </div>
 	    </div>
